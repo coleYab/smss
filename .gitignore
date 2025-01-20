@@ -1,0 +1,8 @@
+.env
+bin/
+cmd/migrate/migrations
+dev_start.sh
+tmp
+create_tables.sql
+create_db.sql
+
