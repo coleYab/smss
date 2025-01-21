@@ -111,8 +111,20 @@ func (h *Handler) loginUser(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) logoutUser(w http.ResponseWriter, r *http.Request) {
 }
 
+// TODO: add midlleware to allow only admins to access this slite
+func (h *Handler) handleGetUsers(w http.ResponseWriter, r *http.Request) {
+	users, err := h.store.GetAllUsers()
+	if err != nil {
+		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	utils.WriteJson(w, http.StatusInternalServerError, users)
+}
+
 func (h *Handler) RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/user/register", h.registerUser).Methods("POST")
 	router.HandleFunc("/login", h.loginUser)
 	router.HandleFunc("/logout", h.logoutUser)
+	router.HandleFunc("/user", h.handleGetUsers).Methods("GET")
 }
