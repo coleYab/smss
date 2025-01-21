@@ -52,6 +52,37 @@ func (q *Queries) DeleteBookById(ctx context.Context, id uuid.UUID) error {
 	return err
 }
 
+const getBookByAuthor = `-- name: GetBookByAuthor :many
+SELECT id, title, author, isbn, category, availability_status FROM "Book" WHERE author = $1
+`
+
+func (q *Queries) GetBookByAuthor(ctx context.Context, author string) ([]Book, error) {
+	rows, err := q.db.Query(ctx, getBookByAuthor, author)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Book
+	for rows.Next() {
+		var i Book
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Author,
+			&i.Isbn,
+			&i.Category,
+			&i.AvailabilityStatus,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getBookById = `-- name: GetBookById :one
 SELECT id, title, author, isbn, category, availability_status FROM "Book" WHERE id = $1
 `
@@ -151,21 +182,23 @@ func (q *Queries) GetBooksByAvailablity(ctx context.Context, availabilityStatus 
 }
 
 const updateBook = `-- name: UpdateBook :one
-INSERT INTO "Book" ( title, author , isbn, category, availability_status) 
-VALUES ($1, $2, $3, $4, $5)
+UPDATE "Book" SET title = $2, author = $3, isbn = $4, category = $5, availability_status = $6
+WHERE id = $1
 RETURNING id, title, author, isbn, category, availability_status
 `
 
 type UpdateBookParams struct {
-	Title              string `json:"title"`
-	Author             string `json:"author"`
-	Isbn               string `json:"isbn"`
-	Category           string `json:"category"`
-	AvailabilityStatus bool   `json:"availability_status"`
+	ID                 uuid.UUID `json:"id"`
+	Title              string    `json:"title"`
+	Author             string    `json:"author"`
+	Isbn               string    `json:"isbn"`
+	Category           string    `json:"category"`
+	AvailabilityStatus bool      `json:"availability_status"`
 }
 
 func (q *Queries) UpdateBook(ctx context.Context, arg UpdateBookParams) (Book, error) {
 	row := q.db.QueryRow(ctx, updateBook,
+		arg.ID,
 		arg.Title,
 		arg.Author,
 		arg.Isbn,

@@ -15,8 +15,9 @@ type Store struct {
 }
 
 // UpdateBook implements types.BookStore.
-func (s *Store) UpdateBook(book types.UpdateBookPayload) (repository.Book, error) {
+func (s *Store) UpdateBook(id uuid.UUID, book types.UpdateBookPayload) (repository.Book, error) {
 	return s.queries.UpdateBook(s.ctx, repository.UpdateBookParams{
+		ID:                 id,
 		AvailabilityStatus: book.AvailabilityStatus,
 		Category:           book.Category,
 		Title:              book.Title,

@@ -58,7 +58,7 @@ type BookStore interface {
 	GetAllBooks() ([]repository.Book, error)
 	CreateBook(book CreateBookPayload) (uuid.UUID, error)
 	DeleteBookById(id uuid.UUID) error
-	UpdateBook(UpdateBookPayload) (repository.Book, error)
+	UpdateBook(uuid.UUID, UpdateBookPayload) (repository.Book, error)
 }
 
 type ProductStore interface {

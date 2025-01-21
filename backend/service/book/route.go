@@ -97,7 +97,7 @@ func (h *Handler) updateBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// now prepare the book for update
-	book, err := h.store.UpdateBook(bookPayload)
+	book, err := h.store.UpdateBook(id, bookPayload)
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)
 		return
