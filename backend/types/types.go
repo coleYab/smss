@@ -104,3 +104,29 @@ type UpdateBookPayload struct {
 	Category           string `validate:"required" json:"category"`
 	AvailabilityStatus bool   `json:"availability_status"`
 }
+
+type CreateBookRentPayload struct {
+	BookID       uuid.UUID `validate:"required" json:"book_id"`
+	StudentID    uuid.UUID `validate:"required" json:"student_id"`
+	LibrarianID  uuid.UUID `validate:"required" json:"librarian_id"`
+	ReturnWithin int32     `validate:"required" json:"return_within"`
+	Status       string    `validate:"required" json:"status"`
+}
+
+type BookRentStore interface {
+	GetBookRentById(id uuid.UUID) (repository.BookRent, error)
+	GetAllBookRents() ([]repository.BookRent, error)
+	CreateBookRent(book CreateBookRentPayload) (uuid.UUID, error)
+	DeleteBookRentById(id uuid.UUID) error
+	UpdateBookRent(uuid.UUID, UpdateBookRentPayload) (repository.BookRent, error)
+}
+
+type UpdateBookRentPayload struct {
+	ID           uuid.UUID `validate:"required" json:"id"`
+	BookID       uuid.UUID `validate:"required" json:"book_id"`
+	StudentID    uuid.UUID `validate:"required" json:"student_id"`
+	LibrarianID  uuid.UUID `validate:"required" json:"librarian_id"`
+	RentDate     time.Time `validate:"required" json:"rent_date"`
+	ReturnWithin int32     `validate:"required" json:"return_within"`
+	Status       string    `validate:"required" json:"status"`
+}

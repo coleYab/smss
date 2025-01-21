@@ -28,7 +28,7 @@ func initConfig() *Config {
 		dbPassword:     getEnv("DB_PWD", "password"),
 		dbName:         getEnv("DB_NAME", "ecom"),
 		dbUser:         getEnv("DB_USER", "postgres"),
-		Port:           ":" + getEnv("PORT", "5000"),
+		Port:           ":" + getEnv("PORT", "8080"),
 		JwtExpirations: getEnv("JWT_EXPIRATION", "3600"),
 		JwtSecret:      getEnv("JWT_SECRET", "My Super secret"),
 	}

@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	validator "github.com/go-playground/validator/v10"
@@ -30,6 +31,11 @@ func WriteError(w http.ResponseWriter, status int, err error) error {
 	return WriteJson(w, status, map[string]string{
 		"message": err.Error(),
 	})
+}
+
+func LogRequestAndResponse(r *http.Response, statusCode int) {
+	// TIMESTAMP, METHOD, URL, STATAUS CODE
+	log.Printf("%v %v %v", r.Request.Method, r.Request.URL, statusCode)
 }
 
 func GetUUIDFromParam(r *http.Request, paramName string) (uuid.UUID, error) {

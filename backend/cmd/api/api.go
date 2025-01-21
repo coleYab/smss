@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/coleYab/ecommerce_go/service/book"
+	"github.com/coleYab/ecommerce_go/service/bookrent"
 	"github.com/coleYab/ecommerce_go/service/user"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4"
@@ -37,6 +38,10 @@ func (s *ApiServer) Run() error {
 	bookStore := book.NewStore(s.db)
 	bookHanlder := book.NewHandler(bookStore)
 	bookHanlder.RegisterRoutes(subrouter)
+
+	bookRentStore := bookrent.NewStore(s.db)
+	bookRentHanlder := bookrent.NewHandler(bookStore, userStore, bookRentStore)
+	bookRentHanlder.RegisterRoutes(subrouter)
 
 	log.Printf("Server started running at address: http://localhost:%v", s.addr)
 	return http.ListenAndServe(s.addr, router)
