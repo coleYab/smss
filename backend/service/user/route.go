@@ -51,6 +51,7 @@ func (h *Handler) registerUser(w http.ResponseWriter, r *http.Request) {
 	hashedPassword, err := auth.HashPassword(userPayload.Password)
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
 	}
 
 	userPayload.Password = hashedPassword
