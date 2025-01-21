@@ -113,12 +113,81 @@ type CreateBookRentPayload struct {
 	Status       string    `validate:"required" json:"status"`
 }
 
+type CreateDonationPayload struct {
+	BookID       uuid.UUID `validate:"required" json:"book_id"`
+	StudentID    uuid.UUID `validate:"required" json:"student_id"`
+	LibrarianID  uuid.UUID `validate:"required" json:"librarian_id"`
+	ReturnWithin int32     `validate:"required" json:"return_within"`
+	Status       string    `validate:"required" json:"status"`
+}
+
+type UpdateDonationPayload struct {
+	BookID       uuid.UUID `validate:"required" json:"book_id"`
+	StudentID    uuid.UUID `validate:"required" json:"student_id"`
+	LibrarianID  uuid.UUID `validate:"required" json:"librarian_id"`
+	ReturnWithin int32     `validate:"required" json:"return_within"`
+	Status       string    `validate:"required" json:"status"`
+}
+
+type DonationStore interface {
+	GetDonationById(id uuid.UUID) (repository.Donation, error)
+	GetAllDonations() ([]repository.Donation, error)
+	CreateDonation(book CreateDonationPayload) (uuid.UUID, error)
+	DeleteDonationById(id uuid.UUID) error
+	UpdateDonation(uuid.UUID, UpdateDonationPayload) (repository.Donation, error)
+}
 type BookRentStore interface {
 	GetBookRentById(id uuid.UUID) (repository.BookRent, error)
 	GetAllBookRents() ([]repository.BookRent, error)
 	CreateBookRent(book CreateBookRentPayload) (uuid.UUID, error)
 	DeleteBookRentById(id uuid.UUID) error
 	UpdateBookRent(uuid.UUID, UpdateBookRentPayload) (repository.BookRent, error)
+}
+
+type CreateLibrarianPayload struct {
+}
+
+type UpdateLibrarianPayload struct {
+}
+
+type CreateTeacherPayload struct {
+}
+
+type UpdateTeacherPayload struct {
+}
+
+type CreateStudentPayload struct {
+}
+
+type UpdateStudentPayload struct {
+}
+
+type CreateDonorPayload struct {
+}
+
+type UpdateDonorPayload struct {
+}
+
+type RoleStore interface {
+	// librarian interfaces
+	CreateLibrarian(book CreateLibrarianPayload) (uuid.UUID, error)
+	DeleteLibrarianById(id uuid.UUID) error
+	UpdateLibrarian(uuid.UUID, UpdateLibrarianPayload) (repository.BookRent, error)
+
+	// teacher interfaces
+	CreateTeacher(book CreateTeacherPayload) (uuid.UUID, error)
+	DeleteTeacherById(id uuid.UUID) error
+	UpdateTeacher(uuid.UUID, UpdateTeacherPayload) (repository.BookRent, error)
+
+	// student interfaces
+	CreateStudent(book CreateStudentPayload) (uuid.UUID, error)
+	DeleteStudentById(id uuid.UUID) error
+	UpdateStudent(uuid.UUID, UpdateStudentPayload) (repository.BookRent, error)
+
+	// donor interfaces
+	UpdateDonor(uuid.UUID, UpdateDonorPayload) (repository.BookRent, error)
+	CreateDonor(book CreateDonorPayload) (uuid.UUID, error)
+	DeleteDonorById(id uuid.UUID) error
 }
 
 type UpdateBookRentPayload struct {
