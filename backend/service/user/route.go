@@ -2,10 +2,10 @@ package user
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/coleYab/ecommerce_go/config"
+	"github.com/coleYab/ecommerce_go/middleware"
 	"github.com/coleYab/ecommerce_go/service/auth"
 	"github.com/coleYab/ecommerce_go/types"
 	"github.com/coleYab/ecommerce_go/utils"
@@ -101,7 +101,6 @@ func (h *Handler) loginUser(w http.ResponseWriter, r *http.Request) {
 	// add jwt token
 	token, err := auth.CreateJWTToken(config.Envs.JwtSecret, user.ID, user.Role)
 	if err != nil {
-		log.Println("token generation failed with", err.Error())
 		utils.WriteError(w, http.StatusInternalServerError, fmt.Errorf("token generation failed"))
 		return
 	}
@@ -120,12 +119,12 @@ func (h *Handler) handleGetUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.WriteJson(w, http.StatusInternalServerError, users)
+	utils.WriteJson(w, http.StatusOK, users)
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/user/register", h.registerUser).Methods("POST")
 	router.HandleFunc("/login", h.loginUser)
 	router.HandleFunc("/logout", h.logoutUser)
-	router.HandleFunc("/user", h.handleGetUsers).Methods("GET")
+	router.HandleFunc("/user", middleware.ProtectRoute(h.handleGetUsers, h.store, "staff")).Methods("GET")
 }
