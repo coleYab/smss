@@ -137,14 +137,8 @@ const LoginPage = ({ role }) => {
 
   return (
     <div className="w-screen h-screen bg-gray-100 flex flex-row-reverse overflow-hidden">
-      <div className="mr-[350px] xs:hidden">
-        <Image
-          src={bgpic}
-          alt="bgpic"
-          width="100%"
-          height="100%"
-          className=""
-        />
+      <div className="mr-[350px] hidden lg:block">
+        <Image src={bgpic} alt="bgpic" width="100%" height="100%" />
       </div>
 
       <div className="flex-grow">
@@ -285,14 +279,14 @@ const LoginPage = ({ role }) => {
                   >
                     Login as Guest
                   </Button>
-                  {role === "Admin" && (
-                    <Grid container>
-                      <Grid>Don't have an account?</Grid>
-                      <Grid container sx={{ ml: 2 }}>
-                        <StyledLink to="/Adminregister">Sign up</StyledLink>
-                      </Grid>
+                  {/* {role === "Admin" && ( */}
+                  <Grid container>
+                    <Grid>Don't have an account?</Grid>
+                    <Grid container sx={{ ml: 2 }}>
+                      <StyledLink href="/signup">Sign up</StyledLink>
                     </Grid>
-                  )}
+                  </Grid>
+                  {/* )} */}
                 </Box>
               </Box>
             </Grid>
@@ -318,7 +312,6 @@ const LoginPage = ({ role }) => {
 export default LoginPage;
 
 const StyledLink = styled(Link)`
-  margin-top: 9px;
   text-decoration: none;
   color: #7f56da;
 `;
