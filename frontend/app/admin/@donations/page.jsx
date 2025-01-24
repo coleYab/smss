@@ -1,8 +1,13 @@
+
+"use client"
+import DonationsList from '@components/DonationsTable'
 import React from 'react'
 
 const Donations = () => {
   return (
-    <div>Donations</div>
+    <div>
+      <DonationsList />
+    </div>
   )
 }
 

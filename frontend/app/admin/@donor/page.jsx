@@ -1,8 +1,12 @@
+"use client"
+import StudentsTable from '@components/StudentList'
 import React from 'react'
 
 const Donors = () => {
   return (
-    <div>Donors</div>
+    <div>
+      <StudentsTable role="donor" />
+    </div>
   )
 }
 

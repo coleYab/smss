@@ -1,8 +1,13 @@
+
+"use client"
+import SeeNotice from '@components/SeeNotice'
 import React from 'react'
 
 const Notices = () => {
   return (
-    <div>Notices</div>
+    <div>
+        <SeeNotice />
+    </div>
   )
 }
 

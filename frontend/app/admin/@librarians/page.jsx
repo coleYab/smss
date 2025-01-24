@@ -1,8 +1,12 @@
+"use client"
+import StudentsTable from '@components/StudentList'
 import React from 'react'
 
 const Librarians = () => {
   return (
-    <div>Librarians</div>
+    <div>
+      <StudentsTable role="librarian" />
+    </div>
   )
 }
 
