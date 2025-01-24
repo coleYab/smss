@@ -46,12 +46,12 @@ const studentsData = [
   { id: 10, name: 'Ivy Black', validated: false, registrationDate: '2023-10-05', role: 'staff' },
 ];
 
-const StudentsTable = () => {
+const StudentsTable = ({ role }) => {
   const [students, setStudents] = useState(studentsData);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filterValidated, setFilterValidated] = useState('all');
-  const [filterRole, setFilterRole] = useState('all');
+  const [filterRole, setFilterRole] = useState(role || 'all');
   const [sortOrder, setSortOrder] = useState('asc');
 
   // Handle pagination
@@ -124,9 +124,9 @@ const StudentsTable = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Students List
+        { !role ? "User" : role }s List
       </Typography>
-
+      { !role && 
       <FilterContainer>
         <FormControl variant="outlined" style={{ minWidth: 150 }}>
           <InputLabel>Role</InputLabel>
@@ -162,6 +162,7 @@ const StudentsTable = () => {
           </Typography>
         </IconButton>
       </FilterContainer>
+      }
 
       <TableContainer component={Paper}>
         <Table>
