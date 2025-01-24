@@ -1,6 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const COLORS = ["#326e0a", "#930909"];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({

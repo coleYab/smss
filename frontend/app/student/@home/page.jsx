@@ -27,14 +27,17 @@ const StudentHomePage = () => {
     {
       bookName: "The Alchemist",
       Genre: "Fiction",
+      value: 50,
     },
     {
       bookName: "The Alchemist",
       Genre: "Fiction",
+      value: 30,
     },
     {
       bookName: "The Alchemist",
       Genre: "Fiction",
+      value: 20,
     },
   ];
 
@@ -83,10 +86,12 @@ const StudentHomePage = () => {
           </Grid>
           <Grid xs={12} md={4} lg={3}>
             <ChartContainer>
-              {booksBorrowed.length === 0 && !Array.isArray(booksBorrowed) ? (
-                <Typography variant="h6">No Books Borrowed</Typography>
-              ) : (
+              {booksBorrowed.length > 0 && Array.isArray(booksBorrowed) ? (
                 <CustomPieChart data={booksBorrowed} />
+              ) : (
+                <>
+                  <Typography variant="h6">No Books Borrowed</Typography>
+                </>
               )}
             </ChartContainer>
           </Grid>
