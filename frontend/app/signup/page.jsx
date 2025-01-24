@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Typography,
@@ -25,20 +23,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import bgpic from "@public/images/designlogin.jpg";
 import { LightPurpleButton } from "@components/ButtonStyles";
-// import { registerUser } from "../../redux/userRelated/userHandle";
 import styled from "styled-components";
 import Popup from "@components/Popup";
 
 const defaultTheme = createTheme();
 
 const AdminRegisterPage = () => {
-  //   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-
-  //   const { status, currentUser, response, error, currentRole } = useSelector(
-  //     (state) => state.user
-  //   );
-
   const [toggle, setToggle] = useState(false);
   const [loader, setLoader] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -49,28 +39,6 @@ const AdminRegisterPage = () => {
   const [adminNameError, setAdminNameError] = useState(false);
 
   const handleSubmit = (event) => {};
-
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-
-  //     const name = event.target.adminName.value;
-  //     const schoolName = event.target.schoolName.value;
-  //     const email = event.target.email.value;
-  //     const password = event.target.password.value;
-
-  //     if (!name || !schoolName || !email || !password) {
-  //       if (!name) setAdminNameError(true);
-  //       if (!schoolName) setSchoolNameError(true);
-  //       if (!email) setEmailError(true);
-  //       if (!password) setPasswordError(true);
-  //       return;
-  //     }
-
-  //     const fields = { name, email, password, role, schoolName };
-  //     setLoader(true);
-  //     dispatch(registerUser(fields, role));
-  //   };
-
   const handleInputChange = (event) => {
     const { name } = event.target;
     if (name === "email") setEmailError(false);
@@ -78,21 +46,6 @@ const AdminRegisterPage = () => {
     if (name === "adminName") setAdminNameError(false);
     if (name === "schoolName") setSchoolNameError(false);
   };
-
-  //   useEffect(() => {
-  //     if (
-  //       status === "success" ||
-  //       (currentUser !== null && currentRole === "Admin")
-  //     ) {
-  //       navigate("/Admin/dashboard");
-  //     } else if (status === "failed") {
-  //       setMessage(response);
-  //       setShowPopup(true);
-  //       setLoader(false);
-  //     } else if (status === "error") {
-  //       console.log(error);
-  //     }
-  //   }, [status, currentUser, currentRole, navigate, error, response]);
 
   return (
     <div className="w-screen h-screen  bg-gray-100 flex flex-row-reverse overflow-hidden">
@@ -150,18 +103,7 @@ const AdminRegisterPage = () => {
                     helperText={adminNameError && "Name is required"}
                     onChange={handleInputChange}
                   />
-                  {/* <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="schoolName"
-                    label="Create your school name"
-                    name="schoolName"
-                    autoComplete="off"
-                    error={schoolNameError}
-                    helperText={schoolNameError && "School name is required"}
-                    onChange={handleInputChange}
-                  /> */}
+                
                   <TextField
                     margin="normal"
                     required
