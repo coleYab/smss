@@ -15,8 +15,9 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Button,
 } from '@mui/material';
-import { Delete, Edit, CheckCircle } from '@mui/icons-material';
+import { Delete, Edit } from '@mui/icons-material';
 import styled from 'styled-components';
 
 // Styled components
@@ -181,11 +182,17 @@ const StudentsTable = () => {
                 <TableCell>{student.role}</TableCell>
                 <TableCell>
                   {student.validated ? (
-                    <CheckCircle color="success" />
+                    <Button variant="contained" color="success" disabled>
+                      Validated
+                    </Button>
                   ) : (
-                    <IconButton onClick={() => handleValidate(student.id)}>
-                      <CheckCircle color="disabled" />
-                    </IconButton>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleValidate(student.id)}
+                    >
+                      Validate
+                    </Button>
                   )}
                 </TableCell>
                 <TableCell>

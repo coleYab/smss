@@ -13,6 +13,7 @@ import Classes from  "@/public/images/img2.png";
 import Teachers from "@/public/images/img3.png";
 import Fees from "@/public/images/img4.png";
 import StudentsTable from "./StudentList";
+import DonationsTable from "./DonationsTable";
 
 const AdminHomePage = () => {
   const numberOfStudents = 50;
@@ -54,7 +55,7 @@ const AdminHomePage = () => {
           <Grid item xs={12} md={3} lg={3}>
             <StyledPaper>
               <Image src={Fees} alt="Fees" width={100} height={100} />
-              <Title>Fees Collection</Title>
+              <Title>Total Donations</Title>
               <Data start={0} end={23000} duration={2.5} prefix="$" />
             </StyledPaper>
           </Grid>
@@ -68,6 +69,11 @@ const AdminHomePage = () => {
           <Grid item xs={12} md={12} lg={12}>
             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
               <StudentsTable />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={12} lg={12}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <DonationsTable />
             </Paper>
           </Grid>
         </Grid>
