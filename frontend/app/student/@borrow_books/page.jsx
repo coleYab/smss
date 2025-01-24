@@ -27,7 +27,7 @@ const Borrow_Books = () => {
       >
         <TextField
           id="outlined-search"
-          label="Search field"
+          label="Search books..."
           type="search"
           sx={{ width: "75%", backgroundColor: "#fff" }}
         />
