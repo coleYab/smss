@@ -1,5 +1,11 @@
+import AdminSideBar from "@components/AdminSidebar";
+import AdminHomePage from "@components/AdminHomePage";
+
 const Admin = () => {
-    return <div>Admin</div>
+    return <div>
+        <AdminSideBar />
+        <AdminHomePage />
+    </div>
 }
 
 export default Admin;
