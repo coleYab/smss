@@ -12,6 +12,7 @@ import Students from "@/public/images/img1.png";
 import Classes from  "@/public/images/img2.png";
 import Teachers from "@/public/images/img3.png";
 import Fees from "@/public/images/img4.png";
+import StudentsTable from "./StudentList";
 
 const AdminHomePage = () => {
   const numberOfStudents = 50;
@@ -62,6 +63,11 @@ const AdminHomePage = () => {
           <Grid item xs={12} md={12} lg={12}>
             <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
               <SeeNotice />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={12} lg={12}>
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              <StudentsTable />
             </Paper>
           </Grid>
         </Grid>
