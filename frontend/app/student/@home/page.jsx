@@ -68,7 +68,7 @@ const StudentHomePage = () => {
   // ];
   return (
     <>
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Container sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           <Grid xs={12} md={3} lg={3}>
             <StyledPaper>
