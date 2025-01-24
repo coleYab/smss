@@ -1,8 +1,9 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- User Table
 CREATE TABLE "User" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     username VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    password TEXT NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     role VARCHAR(50) CHECK (role IN ('student', 'staff', 'donor', 'librarian')) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +37,7 @@ CREATE TABLE "Donor" (
 CREATE TABLE "Donation" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     donor_id UUID REFERENCES "Donor" (id)  ,
-    student_id UUID REFERENCES "Student" (id)  ,
+    -- student_id UUID REFERENCES "Student" (id)  ,
     amount DECIMAL(18, 2) NOT NULL CHECK (amount > 0),
     donation_date DATE NOT NULL,
     status VARCHAR(50) CHECK (status IN ('Pending', 'Completed', 'Canceled')) NOT NULL

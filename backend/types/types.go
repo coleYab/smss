@@ -199,3 +199,9 @@ type UpdateBookRentPayload struct {
 	ReturnWithin int32     `validate:"required" json:"return_within"`
 	Status       string    `validate:"required" json:"status"`
 }
+
+type JWTClaims struct {
+	Role   string
+	UserId uuid.UUID
+	Exp    time.Time
+}
