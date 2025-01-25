@@ -57,7 +57,7 @@ export const Title = styled.p`
 
 export const Data = styled(CountUp)`
   font-size: calc(1.3rem + 0.6vw);
-  color: green;
+  color: ${(props) => props.color || "green"};
 `;
 
 // Student borrow books page
