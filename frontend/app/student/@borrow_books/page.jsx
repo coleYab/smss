@@ -9,7 +9,7 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import styled from "styled-components";
+import { CustomBlackButton } from "@components/StyledComponents";
 
 const Borrow_Books = () => {
   const alreadyBorrowedBook = true;
@@ -31,7 +31,7 @@ const Borrow_Books = () => {
           type="search"
           sx={{ width: "75%", backgroundColor: "#fff" }}
         />
-        <BlackButton variant="contained">Search</BlackButton>
+        <CustomBlackButton variant="contained">Search</CustomBlackButton>
       </Box>
 
       <Box>
@@ -66,7 +66,9 @@ const Borrow_Books = () => {
                   Already Borrowed
                 </Typography>
               ) : (
-                <BlackButton variant="contained">Borrow Book</BlackButton>
+                <CustomBlackButton variant="contained">
+                  Borrow Book
+                </CustomBlackButton>
               )}
             </Box>
           </ListItem>
@@ -87,7 +89,9 @@ const Borrow_Books = () => {
                 <Typography variant="body1">Author</Typography>
                 <Typography variant="body2">Genre</Typography>
               </Box>
-              <BlackButton variant="contained">Borrow Book</BlackButton>
+              <CustomBlackButton variant="contained">
+                Borrow Book
+              </CustomBlackButton>
             </Box>
           </ListItem>
         </List>
@@ -155,23 +159,3 @@ const Borrow_Books = () => {
 };
 
 export default Borrow_Books;
-
-const BlackButton = styled(Button)`
-  && {
-    font-size: 18px;
-    text-transform: none;
-    padding: 12px 32px;
-    background-color: #000000;
-    border-radius: 4px;
-    box-shadow: none;
-    color: white;
-    &:hover {
-      background-color: #212020;
-      border-color: #212020;
-      box-shadow: 10px 10px 5px rgb(0 0 0 / 30%);
-    }
-    &:active {
-      box-shadow: none;
-    }
-  }
-`;

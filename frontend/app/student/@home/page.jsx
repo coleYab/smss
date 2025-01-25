@@ -7,12 +7,16 @@ import Grid from "@mui/material/Grid2";
 // import { calculateOverallAttendancePercentage } from "../../components/attendanceCalculator";
 import CustomPieChart from "@components/CustomPieChart";
 // import { getUserDetails } from "../../redux/userRelated/userHandle";
-import styled from "styled-components";
 import SeeNotice from "@components/SeeNotice";
-import CountUp from "react-countup";
 import Subject from "@/public/images/subjects.svg";
 import Fees from "@public/images/img4.png";
 // import { getSubjectList } from "../../redux/sclassRelated/sclassHandle";
+import {
+  ChartContainer,
+  StyledPaper,
+  Title,
+  Data,
+} from "@components/StyledComponents";
 
 const StudentHomePage = () => {
   //   const dispatch = useDispatch();
@@ -105,34 +109,5 @@ const StudentHomePage = () => {
     </>
   );
 };
-
-const ChartContainer = styled.div`
-  padding: 2px;
-  display: flex;
-  flex-direction: column;
-  height: 240px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-`;
-
-const StyledPaper = styled(Paper)`
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-`;
-
-const Title = styled.p`
-  font-size: 1.25rem;
-`;
-
-const Data = styled(CountUp)`
-  font-size: calc(1.3rem + 0.6vw);
-  color: green;
-`;
 
 export default StudentHomePage;
