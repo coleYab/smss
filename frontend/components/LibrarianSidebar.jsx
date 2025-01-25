@@ -15,6 +15,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AccountBoxRoundedIcon from "@mui/icons-material/AccountBoxRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
 
 const LibrarianSidebar = ({ activeSection, handleActiveSection }) => {
   const pathname = usePathname();
@@ -63,6 +64,21 @@ const LibrarianSidebar = ({ activeSection, handleActiveSection }) => {
               />
             </ListItemIcon>
             <ListItemText primary="Rented books" />
+          </ListItemButton>
+        </div>
+
+        <div onClick={() => handleActiveSection("add_new_book")}>
+          <ListItemButton>
+            <ListItemIcon>
+              <PlaylistAddCheckRoundedIcon
+                color={
+                  activeSection === "add_new_book" && pathname === "/librarian"
+                    ? "primary"
+                    : "inherit"
+                }
+              />
+            </ListItemIcon>
+            <ListItemText primary="Add new Book" />
           </ListItemButton>
         </div>
       </React.Fragment>

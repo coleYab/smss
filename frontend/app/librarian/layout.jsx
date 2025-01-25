@@ -9,6 +9,7 @@ const LibrarianLayout = ({
   rented_books,
   profile,
   student_profile,
+  add_new_book,
 }) => {
   const [activeSection, setActiveSection] = useState("home");
 
@@ -30,6 +31,7 @@ const LibrarianLayout = ({
         {activeSection === "rented_books" && rented_books}
         {activeSection === "profile" && profile}
         {activeSection === "student_profile" && student_profile}
+        {activeSection === "add_new_book" && add_new_book}
       </MainContent>
     </Container>
   );
