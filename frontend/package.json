@@ -22,6 +22,7 @@
     "@eslint/eslintrc": "^3",
     "@mui/icons-material": "^6.4.1",
     "@mui/material": "^6.4.1",
+    "@mui/x-charts": "^7.24.1",
     "@uploadthing/react": "^7.1.5",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
