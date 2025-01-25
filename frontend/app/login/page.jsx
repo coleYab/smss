@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-// import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Box,
@@ -24,19 +24,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import bgpic from "@public/images/designlogin.jpg";
 import { LightPurpleButton } from "@components/ButtonStyles";
 import styled from "styled-components";
-// import { loginUser } from "../redux/userRelated/userHandle";
 import Popup from "@components/Popup";
 
 const defaultTheme = createTheme();
 
 const LoginPage = ({ role }) => {
-  //   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-
-  // const { status, currentUser, response, error, currentRole } = useSelector(
-  //   (state) => state.user
-  // );
-
   const [toggle, setToggle] = useState(false);
   const [guestLoader, setGuestLoader] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -45,98 +37,78 @@ const LoginPage = ({ role }) => {
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [rollNumberError, setRollNumberError] = useState(false);
-  const [studentNameError, setStudentNameError] = useState(false);
 
-  const handleSubmit = (event) => {};
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-  //     if (role === "Student") {
-  //       const rollNum = event.target.rollNumber.value;
-  //       const studentName = event.target.studentName.value;
-  //       const password = event.target.password.value;
+    if (!email || !password) {
+      if (!email) setEmailError(true);
+      if (!password) setPasswordError(true);
+      return;
+    }
 
-  //       if (!rollNum || !studentName || !password) {
-  //         if (!rollNum) setRollNumberError(true);
-  //         if (!studentName) setStudentNameError(true);
-  //         if (!password) setPasswordError(true);
-  //         return;
-  //       }
-  //       const fields = { rollNum, studentName, password };
-  //       setLoader(true);
-  //       dispatch(loginUser(fields, role));
-  //     } else {
-  //       const email = event.target.email.value;
-  //       const password = event.target.password.value;
+    const fields = { email, password };
 
-  //       if (!email || !password) {
-  //         if (!email) setEmailError(true);
-  //         if (!password) setPasswordError(true);
-  //         return;
-  //       }
+    try {
+      setLoader(true); 
+      await setTimeout(() => {
+        console.log("test")
+      }, 1000)
+      const url = "http://localhost:8080/api/v1/login";
+      const res = await fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(fields),
+      });
 
-  //       const fields = { email, password };
-  //       setLoader(true);
-  //       dispatch(loginUser(fields, role));
-  //     }
-  //   };
+      if (!res.ok) {
+        const body = await res.json();
+        throw new Error(`HTTP error! Status: ${res.status} and with message ${body["message"]}`);
+      }
+
+      const data = await res.json();
+      console.log(data);
+
+      // Show success toast
+      toast.success("Login successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      // Redirect or perform other actions on successful login
+      // Example: router.push("/dashboard");
+    } catch (err) {
+      toast.error(err.message || "Login failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setLoader(false); // Hide loader after processing
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name } = event.target;
     if (name === "email") setEmailError(false);
     if (name === "password") setPasswordError(false);
-    if (name === "rollNumber") setRollNumberError(false);
-    if (name === "studentName") setStudentNameError(false);
   };
-
-  const guestModeHandler = () => {};
-
-  //   const guestModeHandler = () => {
-  //     const password = "zxc";
-
-  //     if (role === "Admin") {
-  //       const email = "yogendra@12";
-  //       const fields = { email, password };
-  //       setGuestLoader(true);
-  //       dispatch(loginUser(fields, role));
-  //     } else if (role === "Student") {
-  //       const rollNum = "1";
-  //       const studentName = "Dipesh Awasthi";
-  //       const fields = { rollNum, studentName, password };
-  //       setGuestLoader(true);
-  //       dispatch(loginUser(fields, role));
-  //     } else if (role === "Teacher") {
-  //       const email = "tony@12";
-  //       const fields = { email, password };
-  //       setGuestLoader(true);
-  //       dispatch(loginUser(fields, role));
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     if (status === "success" || currentUser !== null) {
-  //       if (currentRole === "Admin") {
-  //         navigate("/Admin/dashboard");
-  //       } else if (currentRole === "Student") {
-  //         navigate("/Student/dashboard");
-  //       } else if (currentRole === "Teacher") {
-  //         navigate("/Teacher/dashboard");
-  //       }
-  //     } else if (status === "failed") {
-  //       setMessage(response);
-  //       setShowPopup(true);
-  //       setLoader(false);
-  //     } else if (status === "error") {
-  //       setMessage("Network Error");
-  //       setShowPopup(true);
-  //       setLoader(false);
-  //       setGuestLoader(false);
-  //     }
-  //   }, [status, currentRole, navigate, error, response, currentUser]);
 
   return (
     <div className="w-screen h-screen bg-gray-100 flex flex-row-reverse overflow-hidden">
+      <ToastContainer /> {/* Add this to render toast notifications */}
       <div className="mr-[350px] hidden lg:block">
         <Image src={bgpic} alt="bgpic" width="100%" height="100%" />
       </div>
@@ -175,53 +147,19 @@ const LoginPage = ({ role }) => {
                   onSubmit={handleSubmit}
                   sx={{ mt: 2 }}
                 >
-                  {role === "Student" ? (
-                    <>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="rollNumber"
-                        label="Enter your Roll Number"
-                        name="rollNumber"
-                        autoComplete="off"
-                        type="number"
-                        autoFocus
-                        error={rollNumberError}
-                        helperText={
-                          rollNumberError && "Roll Number is required"
-                        }
-                        onChange={handleInputChange}
-                      />
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="studentName"
-                        label="Enter your name"
-                        name="studentName"
-                        autoComplete="name"
-                        autoFocus
-                        error={studentNameError}
-                        helperText={studentNameError && "Name is required"}
-                        onChange={handleInputChange}
-                      />
-                    </>
-                  ) : (
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Enter your email"
-                      name="email"
-                      autoComplete="email"
-                      autoFocus
-                      error={emailError}
-                      helperText={emailError && "Email is required"}
-                      onChange={handleInputChange}
-                    />
-                  )}
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Enter your email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    error={emailError}
+                    helperText={emailError && "Email is required"}
+                    onChange={handleInputChange}
+                  />
                   <TextField
                     margin="normal"
                     required
@@ -266,27 +204,12 @@ const LoginPage = ({ role }) => {
                       "Login"
                     )}
                   </LightPurpleButton>
-                  <Button
-                    fullWidth
-                    onClick={guestModeHandler}
-                    variant="outlined"
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                      color: "#7f56da",
-                      borderColor: "#7f56da",
-                    }}
-                  >
-                    Login as Guest
-                  </Button>
-                  {/* {role === "Admin" && ( */}
                   <Grid container>
                     <Grid>Don't have an account?</Grid>
                     <Grid container sx={{ ml: 2 }}>
                       <StyledLink href="/signup">Sign up</StyledLink>
                     </Grid>
                   </Grid>
-                  {/* )} */}
                 </Box>
               </Box>
             </Grid>

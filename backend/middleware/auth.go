@@ -17,6 +17,13 @@ func ProtectRoute(next HandlerFunc, store types.UserStore, role string) HandlerF
 	return func(w http.ResponseWriter, r *http.Request) {
 		// do the authorization logic here
 		token := r.Header.Get("Authorization")
+		cookie, err := r.Cookie("jwt")
+		if err != nil {
+			utils.WriteError(w, http.StatusUnauthorized, err)
+			return
+		}
+		token = cookie.Value
+		fmt.Println(token)
 		// assuming that it will be a "<TokenType> <tokenValue>"
 		tokenPart := strings.Split(token, " ")
 		log.Printf("%v is the token part that was parsed", tokenPart[1])

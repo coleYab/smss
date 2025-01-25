@@ -39,8 +39,8 @@ const Container = styled.div`
 `;
 
 const Sidebar = styled.div`
+background-color: white;
   width: 240px;
-  background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   position: fixed;

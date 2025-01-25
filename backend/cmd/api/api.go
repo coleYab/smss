@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/coleYab/ecommerce_go/middleware"
 	"github.com/coleYab/ecommerce_go/service/book"
 	"github.com/coleYab/ecommerce_go/service/bookrent"
 	"github.com/coleYab/ecommerce_go/service/user"
@@ -25,6 +26,8 @@ func NewApiServer(addr string, db *pgx.Conn) *ApiServer {
 
 func (s *ApiServer) Run() error {
 	router := mux.NewRouter()
+
+	router.Use(middleware.CorsMiddleware)
 	subrouter := router.PathPrefix("/api/v1/").Subrouter()
 
 	router.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {

@@ -104,6 +104,18 @@ func (h *Handler) loginUser(w http.ResponseWriter, r *http.Request) {
 		utils.WriteError(w, http.StatusInternalServerError, fmt.Errorf("token generation failed"))
 		return
 	}
+	// Set the cookie in the response
+	cookie := &http.Cookie{
+		Name:     "jwt",                // Cookie name
+		Value:    token,                // JWT token
+		MaxAge:   3500,                 // Cookie expiration time in seconds
+		HttpOnly: true,                 // Prevent client-side JavaScript access
+		Path:     "/",                  // Cookie valid for all paths
+		Secure:   true,                 // Send cookie only over HTTPS (recommended for production)
+		SameSite: http.SameSiteLaxMode, // Prevent CSRF attacks
+	}
+
+	http.SetCookie(w, cookie) // Add the cookie to the response headers
 
 	utils.WriteJson(w, http.StatusOK, map[string]string{"token": token})
 }
@@ -126,5 +138,5 @@ func (h *Handler) RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/user/register", h.registerUser).Methods("POST")
 	router.HandleFunc("/login", h.loginUser)
 	router.HandleFunc("/logout", h.logoutUser)
-	router.HandleFunc("/user", middleware.ProtectRoute(h.handleGetUsers, h.store, "staff")).Methods("GET")
+	router.HandleFunc("/user", middleware.ProtectRoute(h.handleGetUsers, h.store, "admin")).Methods("GET")
 }

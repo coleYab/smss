@@ -25,6 +25,7 @@ import bgpic from "@public/images/designlogin.jpg";
 import { LightPurpleButton } from "@components/ButtonStyles";
 import styled from "styled-components";
 import Popup from "@components/Popup";
+import { toast, ToastContainer } from "react-toastify";
 
 const defaultTheme = createTheme();
 
@@ -38,17 +39,77 @@ const AdminRegisterPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [adminNameError, setAdminNameError] = useState(false);
 
-  const handleSubmit = (event) => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const userName = event.target.userName.value;
+    const role = event.target.role.value;
+
+    if (!email || !password) {
+      if (!email) setEmailError(true);
+      if (!password) setPasswordError(true);
+      return;
+    }
+
+    const fields = { email, password, userName, role };
+
+    try {
+      setLoader(true); 
+      const url = "http://localhost:8080/api/v1/register";
+      const res = await fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(fields),
+      });
+
+      if (!res.ok) {
+        const body = await res.json();
+        throw new Error(`HTTP error! Status: ${res.status} and with message ${body["message"]}`);
+      }
+
+      const data = await res.json();
+      console.log(data);
+
+      // Show success toast
+      toast.success("Registration successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      // Redirect or perform other actions on successful login
+      // Example: router.push("/dashboard");
+    } catch (err) {
+      toast.error(err.message || "Registration failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setLoader(false); // Hide loader after processing
+    }
+  };
+
   const handleInputChange = (event) => {
     const { name } = event.target;
     if (name === "email") setEmailError(false);
     if (name === "password") setPasswordError(false);
-    if (name === "adminName") setAdminNameError(false);
-    if (name === "schoolName") setSchoolNameError(false);
+    if (name === "userName") setAdminNameError(false);
   };
 
   return (
     <div className="w-screen h-screen  bg-gray-100 flex flex-row-reverse overflow-hidden">
+      <ToastContainer />  
       <div className="hidden lg:block">
         <Image src={bgpic} alt="bgpic" width="100%" height="100%" />
       </div>
@@ -94,9 +155,9 @@ const AdminRegisterPage = () => {
                     margin="normal"
                     required
                     fullWidth
-                    id="adminName"
+                    id="userName"
                     label="Enter your name"
-                    name="adminName"
+                    name="userName"
                     autoComplete="name"
                     autoFocus
                     error={adminNameError}
@@ -149,7 +210,7 @@ const AdminRegisterPage = () => {
                       row
                       aria-label="role"
                       name="role"
-                      defaultValue="Student"
+                      defaultValue="student"
                       sx={{
                         display: "flex",
                         justifyContent: "space-between",
@@ -159,14 +220,24 @@ const AdminRegisterPage = () => {
                     >
                       <FormLabel component="legend">Register as:</FormLabel>
                       <FormControlLabel
-                        value="Student"
+                        value="student"
                         control={<Radio />}
                         label="Student"
                       />
                       <FormControlLabel
-                        value="Staff"
+                        value="staff"
                         control={<Radio />}
                         label="Staff"
+                      />
+                      <FormControlLabel
+                        value="librarian"
+                        control={<Radio />}
+                        label="Librarian"
+                      />
+                      <FormControlLabel
+                        value="donor"
+                        control={<Radio />}
+                        label="Donor"
                       />
                     </RadioGroup>
                   </Grid>
