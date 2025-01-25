@@ -100,7 +100,7 @@ const AddNewBookPage = () => {
           </Grid2>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]}>
+            <DemoContainer components={["DatePicker"]} sx={{ pt: 0 }}>
               <DatePicker
                 label="Publishing Date"
                 value={publishingDate}
