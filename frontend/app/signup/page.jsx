@@ -103,7 +103,7 @@ const AdminRegisterPage = () => {
                     helperText={adminNameError && "Name is required"}
                     onChange={handleInputChange}
                   />
-                
+
                   <TextField
                     margin="normal"
                     required
@@ -167,6 +167,17 @@ const AdminRegisterPage = () => {
                         value="Staff"
                         control={<Radio />}
                         label="Staff"
+                      />
+                      <FormControlLabel
+                        value="Donor"
+                        control={<Radio />}
+                        label="Donor
+                       "
+                      />
+                      <FormControlLabel
+                        value="Librerian"
+                        control={<Radio />}
+                        label="Librerian"
                       />
                     </RadioGroup>
                   </Grid>
