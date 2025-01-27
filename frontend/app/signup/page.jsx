@@ -175,9 +175,9 @@ const AdminRegisterPage = () => {
                        "
                       />
                       <FormControlLabel
-                        value="Librerian"
+                        value="Librarian"
                         control={<Radio />}
-                        label="Librerian"
+                        label="Librarian"
                       />
                     </RadioGroup>
                   </Grid>
